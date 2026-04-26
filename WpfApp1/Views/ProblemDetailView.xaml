@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="CaissaApp.Views.ProblemDetailView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:components="clr-namespace:CaissaApp.Components"
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf">
+    <Grid>
+        <Grid Grid.Row="0">
+        <StackPanel Margin="20" >
+
+        <TextBlock Text="{Binding Fen}" FontWeight="Bold"/>
+        <TextBlock Text="{Binding Stipulation}"/>
+
+        <TextBlock Text="{Binding Url}" Foreground="Blue"/>
+
+    </StackPanel>
+            </Grid>
+    <wv2:WebView2 x:Name="Browser" Grid.Row="1"/>
+    </Grid>
+</UserControl>

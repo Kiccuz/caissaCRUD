@@ -1,0 +1,158 @@
+﻿<UserControl x:Class="CaissaApp.Views.CommentsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:components="clr-namespace:CaissaApp.Components">
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="#8D8DFD">
+            <!-- LOAD -->
+            <Button Content="Carica commenti"
+                Command="{Binding LoadCommentsCommand}"
+                Width="150"
+                Height="40"
+                HorizontalAlignment="Left"/>
+
+            <Grid IsHitTestVisible="True">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <Grid Background="#80000000">
+
+                    <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+
+                        <ProgressBar IsIndeterminate="True"
+                             Width="180"
+                             Height="6"/>
+
+                        <TextBlock Text="Loading..."
+                           Foreground="White"
+                           Margin="0,10,0,0"
+                           HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                </Grid>
+            </Grid>
+        </Grid >
+        <!-- SWITCH -->
+
+        <Button Grid.Row="1"
+                Content="{Binding ViewModeLabel}"
+                Command="{Binding ToggleViewCommand}"
+                Width="150"
+                Height="40"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Left"/>
+
+        <!-- CONTENT -->
+        <ScrollViewer Grid.Row="2"
+              VerticalScrollBarVisibility="Auto"
+              HorizontalScrollBarVisibility="Disabled">
+            <Grid >
+
+                <!-- 🔵 FLAT -->
+                <ItemsControl ItemsSource="{Binding Comments}">
+                    <ItemsControl.Style>
+                        <Style TargetType="ItemsControl">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsGrouped}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Style>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <components:Comment />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                
+                <ItemsControl ItemsSource="{Binding Problems}">
+                    <ItemsControl.Style>
+                        <Style TargetType="ItemsControl">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsGrouped}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Style>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Expander IsExpanded="True"
+                                  Margin="0,5,0,5">
+                                <Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border CornerRadius="10"
+                Padding="10,6"
+                Grid.Column="0">
+
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Color="#1C1AFA" Offset="0"/>
+                                                    <GradientStop Color="#CFCFFF" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+
+                                            <TextBlock Text="{Binding Fen}"
+                       Foreground="White"
+                       FontWeight="SemiBold"/>
+                                        </Border>
+
+                                        <Button Grid.Column="1"
+                Content="Open"
+                Command="{Binding DataContext.OpenProblemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="{Binding}" />
+                                    </Grid>
+                                </Expander.Header>
+                                <ItemsControl ItemsSource="{Binding Comments}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <components:Comment />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

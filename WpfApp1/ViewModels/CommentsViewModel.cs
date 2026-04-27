@@ -77,7 +77,7 @@ namespace CaissaApp.ViewModels
                 foreach (var p in problems)
                 {
                     CommentedProblemViewModel pr = new CommentedProblemViewModel();
-                    Problems.Add(pr);
+                    
                     pr.Fen = p.Fen;
                     pr.Stipulation = p.Stipulation;
 
@@ -111,7 +111,10 @@ namespace CaissaApp.ViewModels
                         });
 
                     }
-
+                    if (pr.Comments.Count > 0)
+                    {
+                        Problems.Add(pr);
+                    }
                 }
             }
             catch (Exception ex)

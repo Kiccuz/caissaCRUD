@@ -7,24 +7,44 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- BUTTON -->
         <Grid Background="#8D8DFD">
-        <Button Content="Carica problemi"
+            <Button Content="Carica problemi"
                 Command="{Binding LoadProblemsCommand}"
                 Width="150"
                 Height="40"
                 HorizontalAlignment="Left"/>
+            
         </Grid>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
+        <Button Grid.Row="1"
+        Content="{Binding ViewModeLabel}"
+        Command="{Binding ToggleViewCommand}"
+        Width="150"
+        Height="40"
+        Margin="0,10,0,0"
+        HorizontalAlignment="Left"/>
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto"
               HorizontalScrollBarVisibility="Disabled">
         <!-- LISTA -->
+            <Grid>
         <ItemsControl  
                       ItemsSource="{Binding Problems}"
                       Margin="0,10,0,0">
-            <ItemsControl.ItemsPanel>
+                <ItemsControl.Style>
+                    <Style TargetType="ItemsControl">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsGrouped}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ItemsControl.Style>
+                <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
                 </ItemsPanelTemplate>
@@ -44,6 +64,75 @@
             </ItemsControl.ItemTemplate>
 
         </ItemsControl>
+
+            <ItemsControl ItemsSource="{Binding ProblemsByStip}">
+                <ItemsControl.Style>
+                    <Style TargetType="ItemsControl">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsGrouped}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ItemsControl.Style>
+ 
+                    <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+
+                            <Expander IsExpanded="False"
+                                 Margin="0,5,0,5">
+                                <Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border CornerRadius="10"
+                                                Padding="10,6"
+                                                Grid.Column="0">
+
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Color="#1C1AFA" Offset="0"/>
+                                                    <GradientStop Color="#CFCFFF" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+
+                                            <TextBlock Text="{Binding Stip}"
+                                                  Foreground="White"
+                                                  FontWeight="SemiBold"/>
+                                        </Border>
+                                    </Grid>
+                                </Expander.Header>
+                           
+                            <ItemsControl ItemsSource="{Binding Problems}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                            <Button Command="{Binding DataContext.OpenProblemCommand,
+                                                RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Background="Transparent"
+                                    BorderThickness="0">
+
+                                            <components:Problem />
+
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                        </Expander>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </UserControl>

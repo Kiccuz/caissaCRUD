@@ -26,7 +26,7 @@
     <Border Style="{StaticResource CardStyle}"  
         Width="300"
         Height="120">
- 
+
         <Grid >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
@@ -57,7 +57,7 @@
                 <TextBlock Text="{Binding Date, StringFormat=dd/MM/yyyy}"
                        Foreground="LightGray"/>
 
-                <TextBlock Text="{Binding Notes}"
+                <TextBlock Text="{Binding Notes}" ToolTip="note"
                        Foreground="Red"
                        TextWrapping="Wrap"/>
 

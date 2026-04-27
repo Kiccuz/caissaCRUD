@@ -10,12 +10,12 @@ namespace CaissaApp.ViewModels
     public partial class CommentViewModel : ObservableObject
     {
         [ObservableProperty]
-        private DateTime createdAt ;
+        private DateTime createdAt;
         [ObservableProperty]
         private int id;
         [ObservableProperty]
         private string text;
 
-        
+
     }
 }

@@ -60,13 +60,13 @@
                 Margin="0,10,0,0"
                 HorizontalAlignment="Left"/>
 
-        <!-- CONTENT -->
+
         <ScrollViewer Grid.Row="2"
               VerticalScrollBarVisibility="Auto"
               HorizontalScrollBarVisibility="Disabled">
             <Grid >
 
-                <!-- 🔵 FLAT -->
+
                 <ItemsControl ItemsSource="{Binding Comments}">
                     <ItemsControl.Style>
                         <Style TargetType="ItemsControl">
@@ -92,7 +92,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                
+
                 <ItemsControl ItemsSource="{Binding Problems}">
                     <ItemsControl.Style>
                         <Style TargetType="ItemsControl">
